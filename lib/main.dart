@@ -25,13 +25,12 @@ class MyApp extends StatelessWidget {
       // Theme configuration for consistent styling
       theme: ThemeData(
         // Primary color scheme
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
+          seedColor: const Color.fromARGB(255, 34, 104, 82),
           brightness: Brightness.light,
         ),
 
-        // Modern Material 3 design
         useMaterial3: true,
 
         // AppBar theme

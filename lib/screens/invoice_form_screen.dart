@@ -1,6 +1,3 @@
-// SIMPLE TEST VERSION - Replace invoice_form_screen.dart with this to test
-// This version has only 4 REQUIRED fields on ONE screen for easy testing
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/invoice_provider.dart';
@@ -16,15 +13,15 @@ class InvoiceFormScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tax Invoice - SIMPLE TEST'),
-        backgroundColor: Colors.blue,
+        title: const Text('Tax Invoice'),
+        backgroundColor: const Color.fromARGB(255, 68, 136, 131),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Debug Card - Shows validation status
+            // Debug Card
             Card(
               color: invoiceData.isValid
                   ? Colors.green.shade50
@@ -300,7 +297,9 @@ class InvoiceFormScreen extends ConsumerWidget {
         onPressed: invoiceData.isValid
             ? () => _generatePdf(context, invoiceData)
             : null,
-        backgroundColor: invoiceData.isValid ? Colors.blue : Colors.grey,
+        backgroundColor: invoiceData.isValid
+            ? const Color.fromARGB(255, 68, 136, 131)
+            : const Color.fromARGB(255, 75, 228, 198),
         icon: const Icon(Icons.picture_as_pdf),
         label: const Text('GENERATE PDF'),
       ),
@@ -362,12 +361,6 @@ class InvoiceFormScreen extends ConsumerWidget {
   }
 
   Future<void> _generatePdf(BuildContext context, invoiceData) async {
-    print('🚀 GENERATE PDF CALLED!');
-    print('Invoice Number: ${invoiceData.invoiceNumber}');
-    print('Consignor: ${invoiceData.consignorName}');
-    print('Consignee: ${invoiceData.consigneeName}');
-    print('Vehicle: ${invoiceData.motorVehicleNo}');
-
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -389,28 +382,21 @@ class InvoiceFormScreen extends ConsumerWidget {
     );
 
     try {
-      print('📄 Calling PdfService.generateInvoice...');
       final pdfDoc = await PdfService.generateInvoice(invoiceData);
-      print('✅ PDF Generated successfully!');
 
       if (context.mounted) Navigator.of(context).pop();
 
-      print('👀 Opening PDF preview...');
       await PdfService.showPdfPreview(pdfDoc);
-      print('✅ PDF Preview shown!');
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('✅ PDF generated successfully!'),
+            content: Text('PDF generated successfully!'),
             backgroundColor: Colors.green,
           ),
         );
       }
     } catch (e, stackTrace) {
-      print('❌ ERROR: $e');
-      print('Stack trace: $stackTrace');
-
       if (context.mounted) Navigator.of(context).pop();
 
       if (context.mounted) {

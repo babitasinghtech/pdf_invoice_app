@@ -1,6 +1,3 @@
-// lib/models/invoice_data.dart
-
-/// Complete invoice data model matching the tax invoice design
 class InvoiceData {
   // Invoice Metadata
   final String invoiceNumber;
@@ -27,7 +24,7 @@ class InvoiceData {
   final String deliveryPoint;
   final String specialNote;
 
-  // Goods Details (simplified - single item for assignment)
+  // Goods Details
   final String description;
   final String hsnSac;
   final String quantity;
